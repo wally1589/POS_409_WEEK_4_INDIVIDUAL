@@ -1,0 +1,133 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace week4Individual_IndividualExceptions
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+        //no input allowed on the cmbM_unit drop down
+        private void cmbM_unit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        //exemption for only numbers and no negative sign "-"
+        private void txt_length_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int i = e.KeyChar;
+
+            if (i >= 0 && i <= 57)
+            {
+                if (e.KeyChar != '-')
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show("You Can Only Enter a Positive Numbers!");
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                MessageBox.Show("You Can Only Enter Numbers!");
+                e.Handled = true;
+            }
+
+        }
+        //same as above
+        private void txt_width_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            int i = e.KeyChar;
+
+            if (i >= 0 && i <= 57)
+            {
+                if (e.KeyChar != '-')
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show("You Can Only Enter a Positive Numbers!");
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                MessageBox.Show("You Can Only Enter Numbers!");
+                e.Handled = true;
+            }
+        }
+
+        //if statement loop and calculation of area. Closing and restart of program so the program is not
+        //left in an error
+        private void btn_calculate_Click(object sender, EventArgs e)
+        {
+            double total;
+            double total2;
+
+            total = Convert.ToInt32(txt_width.Text) * Convert.ToInt32(txt_length.Text);
+            total2 = (Convert.ToInt32(txt_width.Text) + Convert.ToInt32(txt_length.Text)) * 2;
+
+            if (cmbM_unit.SelectedItem != null)
+            {
+                string some_str = cmbM_unit.SelectedItem.ToString(); // <-- Exception
+
+                if (some_str.Contains("Inches (in)"))
+                {
+                    lbl_total.Text = total + "  sq in";
+                    lbl_total2.Text = total2 + "  in";
+                }
+                if (some_str.Contains("Feet (ft)"))
+                {
+                    lbl_total.Text = total + "  sq ft";
+                    lbl_total2.Text = total2 + "  ft";
+                }
+
+                if (some_str.Contains("Meters (m)"))
+                {
+                    lbl_total.Text = total + "  sq m";
+                    lbl_total2.Text = total2 + "  m";
+                }
+                if (some_str.Contains("Centimeters (cm)"))
+                {
+                    lbl_total.Text = total + "  sq cm";
+                    lbl_total2.Text = total2 + "  cm";
+                }
+                if (MessageBox.Show("End Program? ", "Area Calculator", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
+                {
+
+                    System.Windows.Forms.Application.Exit();
+                }
+                else
+                {
+                    System.Windows.Forms.Application.Restart();
+                }
+
+            }
+
+            else
+            {
+                MessageBox.Show("Please select an item");
+                
+            }
+           
+        }
+    }
+}
